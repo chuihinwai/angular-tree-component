@@ -1,0 +1,52 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { Component, Input, ViewEncapsulation, ElementRef } from '@angular/core';
+import { TreeNode } from '../models/tree-node.model';
+import { deprecatedSelector } from '../deprecated-selector';
+var TreeNodeComponent = (function () {
+    function TreeNodeComponent(elementRef) {
+        this.elementRef = elementRef;
+        deprecatedSelector('TreeNode', 'tree-node', elementRef);
+    }
+    return TreeNodeComponent;
+}());
+__decorate([
+    Input(),
+    __metadata("design:type", TreeNode)
+], TreeNodeComponent.prototype, "node", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Number)
+], TreeNodeComponent.prototype, "index", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Object)
+], TreeNodeComponent.prototype, "templates", void 0);
+TreeNodeComponent = __decorate([
+    Component({
+        selector: 'TreeNode, tree-node',
+        encapsulation: ViewEncapsulation.None,
+        styles: [
+            ".node-content-wrapper {\n      display: inline-block;\n      padding: 2px 5px;\n      border-radius: 2px;\n      transition: background-color .15s,box-shadow .15s;\n    }",
+            '.node-wrapper {display: flex; align-items: flex-start;}',
+            '.tree-node-active > .node-wrapper > .node-content-wrapper { background: #beebff }',
+            '.tree-node-active.tree-node-focused > .node-wrapper > .node-content-wrapper { background: #beebff }',
+            '.tree-node-focused > .node-wrapper > .node-content-wrapper { background: #e7f4f9 }',
+            '.node-content-wrapper:hover { background: #f7fbff }',
+            ".tree-node-active > .node-wrapper > .node-content-wrapper, .tree-node-focused > .node-content-wrapper, .node-content-wrapper:hover {\n      box-shadow: inset 0 0 1px #999;\n    }",
+            '.node-content-wrapper.is-dragging-over { background: #ddffee; box-shadow: inset 0 0 1px #999; }',
+            '.node-content-wrapper.is-dragging-over-disabled { opacity: 0.5 }'
+        ],
+        template: "\n    <ng-container *mobxAutorun>\n      <div\n        *ngIf=\"!templates.treeNodeFullTemplate\"\n        [class]=\"node.getClass()\"\n        [class.tree-node]=\"true\"\n        [class.tree-node-expanded]=\"node.isExpanded && node.hasChildren\"\n        [class.tree-node-collapsed]=\"node.isCollapsed && node.hasChildren\"\n        [class.tree-node-leaf]=\"node.isLeaf\"\n        [class.tree-node-active]=\"node.isActive\"\n        [class.tree-node-focused]=\"node.isFocused\">\n\n        <tree-node-drop-slot *ngIf=\"index === 0\" [dropIndex]=\"node.index\" [node]=\"node.parent\"></tree-node-drop-slot>\n\n          <div class=\"node-wrapper\" [style.padding-left]=\"node.getNodePadding()\">\n            <tree-node-expander [node]=\"node\"></tree-node-expander>\n            <div class=\"node-content-wrapper\"\n              (click)=\"node.mouseAction('click', $event)\"\n              (dblclick)=\"node.mouseAction('dblClick', $event)\"\n              (contextmenu)=\"node.mouseAction('contextMenu', $event)\"\n              (treeDrop)=\"node.onDrop($event)\"\n              [treeAllowDrop]=\"node.allowDrop\"\n              [treeDrag]=\"node\"\n              [treeDragEnabled]=\"node.allowDrag()\">\n\n              <tree-node-content [node]=\"node\" [index]=\"index\" [template]=\"templates.treeNodeTemplate\">\n              </tree-node-content>\n            </div>\n          </div>\n\n        <tree-node-children [node]=\"node\" [templates]=\"templates\"></tree-node-children>\n        <tree-node-drop-slot [dropIndex]=\"node.index + 1\" [node]=\"node.parent\"></tree-node-drop-slot>\n      </div>\n      <template\n        [ngTemplateOutlet]=\"templates.treeNodeFullTemplate\"\n        [ngOutletContext]=\"{ $implicit: node, node: node, index: index, templates: templates }\">\n      </template>\n    </ng-container>"
+    }),
+    __metadata("design:paramtypes", [ElementRef])
+], TreeNodeComponent);
+export { TreeNodeComponent };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHJlZS1ub2RlLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL2xpYi9jb21wb25lbnRzL3RyZWUtbm9kZS5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxLQUFLLEVBQUUsaUJBQWlCLEVBQWUsVUFBVSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQzdGLE9BQU8sRUFBRSxRQUFRLEVBQUUsTUFBTSwyQkFBMkIsQ0FBQztBQUNyRCxPQUFPLEVBQUUsa0JBQWtCLEVBQUUsTUFBTSx3QkFBd0IsQ0FBQztBQStENUQsSUFBYSxpQkFBaUI7SUFLNUIsMkJBQW9CLFVBQXNCO1FBQXRCLGVBQVUsR0FBVixVQUFVLENBQVk7UUFDeEMsa0JBQWtCLENBQUMsVUFBVSxFQUFFLFdBQVcsRUFBRSxVQUFVLENBQUMsQ0FBQztJQUMxRCxDQUFDO0lBRUgsd0JBQUM7QUFBRCxDQUFDLEFBVEQsSUFTQztBQVJVO0lBQVIsS0FBSyxFQUFFOzhCQUFPLFFBQVE7K0NBQUM7QUFDZjtJQUFSLEtBQUssRUFBRTs7Z0RBQWU7QUFDZDtJQUFSLEtBQUssRUFBRTs7b0RBQWdCO0FBSGIsaUJBQWlCO0lBN0Q3QixTQUFTLENBQUM7UUFDVCxRQUFRLEVBQUUscUJBQXFCO1FBQy9CLGFBQWEsRUFBRSxpQkFBaUIsQ0FBQyxJQUFJO1FBQ3JDLE1BQU0sRUFBRTtZQUNOLDRLQUtFO1lBQ0YseURBQXlEO1lBQ3pELG1GQUFtRjtZQUNuRixxR0FBcUc7WUFDckcsb0ZBQW9GO1lBQ3BGLHFEQUFxRDtZQUNyRCxvTEFFRTtZQUNGLGlHQUFpRztZQUNqRyxrRUFBa0U7U0FDbkU7UUFDRCxRQUFRLEVBQUUsc3lEQXFDUTtLQUNuQixDQUFDO3FDQU9nQyxVQUFVO0dBTC9CLGlCQUFpQixDQVM3QjtTQVRZLGlCQUFpQiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgSW5wdXQsIFZpZXdFbmNhcHN1bGF0aW9uLCBUZW1wbGF0ZVJlZiwgRWxlbWVudFJlZiB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgVHJlZU5vZGUgfSBmcm9tICcuLi9tb2RlbHMvdHJlZS1ub2RlLm1vZGVsJztcbmltcG9ydCB7IGRlcHJlY2F0ZWRTZWxlY3RvciB9IGZyb20gJy4uL2RlcHJlY2F0ZWQtc2VsZWN0b3InO1xuXG5AQ29tcG9uZW50KHtcbiAgc2VsZWN0b3I6ICdUcmVlTm9kZSwgdHJlZS1ub2RlJyxcbiAgZW5jYXBzdWxhdGlvbjogVmlld0VuY2Fwc3VsYXRpb24uTm9uZSxcbiAgc3R5bGVzOiBbXG4gICAgYC5ub2RlLWNvbnRlbnQtd3JhcHBlciB7XG4gICAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgICBwYWRkaW5nOiAycHggNXB4O1xuICAgICAgYm9yZGVyLXJhZGl1czogMnB4O1xuICAgICAgdHJhbnNpdGlvbjogYmFja2dyb3VuZC1jb2xvciAuMTVzLGJveC1zaGFkb3cgLjE1cztcbiAgICB9YCxcbiAgICAnLm5vZGUtd3JhcHBlciB7ZGlzcGxheTogZmxleDsgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7fScsXG4gICAgJy50cmVlLW5vZGUtYWN0aXZlID4gLm5vZGUtd3JhcHBlciA+IC5ub2RlLWNvbnRlbnQtd3JhcHBlciB7IGJhY2tncm91bmQ6ICNiZWViZmYgfScsXG4gICAgJy50cmVlLW5vZGUtYWN0aXZlLnRyZWUtbm9kZS1mb2N1c2VkID4gLm5vZGUtd3JhcHBlciA+IC5ub2RlLWNvbnRlbnQtd3JhcHBlciB7IGJhY2tncm91bmQ6ICNiZWViZmYgfScsXG4gICAgJy50cmVlLW5vZGUtZm9jdXNlZCA+IC5ub2RlLXdyYXBwZXIgPiAubm9kZS1jb250ZW50LXdyYXBwZXIgeyBiYWNrZ3JvdW5kOiAjZTdmNGY5IH0nLFxuICAgICcubm9kZS1jb250ZW50LXdyYXBwZXI6aG92ZXIgeyBiYWNrZ3JvdW5kOiAjZjdmYmZmIH0nLFxuICAgIGAudHJlZS1ub2RlLWFjdGl2ZSA+IC5ub2RlLXdyYXBwZXIgPiAubm9kZS1jb250ZW50LXdyYXBwZXIsIC50cmVlLW5vZGUtZm9jdXNlZCA+IC5ub2RlLWNvbnRlbnQtd3JhcHBlciwgLm5vZGUtY29udGVudC13cmFwcGVyOmhvdmVyIHtcbiAgICAgIGJveC1zaGFkb3c6IGluc2V0IDAgMCAxcHggIzk5OTtcbiAgICB9YCxcbiAgICAnLm5vZGUtY29udGVudC13cmFwcGVyLmlzLWRyYWdnaW5nLW92ZXIgeyBiYWNrZ3JvdW5kOiAjZGRmZmVlOyBib3gtc2hhZG93OiBpbnNldCAwIDAgMXB4ICM5OTk7IH0nLFxuICAgICcubm9kZS1jb250ZW50LXdyYXBwZXIuaXMtZHJhZ2dpbmctb3Zlci1kaXNhYmxlZCB7IG9wYWNpdHk6IDAuNSB9J1xuICBdLFxuICB0ZW1wbGF0ZTogYFxuICAgIDxuZy1jb250YWluZXIgKm1vYnhBdXRvcnVuPlxuICAgICAgPGRpdlxuICAgICAgICAqbmdJZj1cIiF0ZW1wbGF0ZXMudHJlZU5vZGVGdWxsVGVtcGxhdGVcIlxuICAgICAgICBbY2xhc3NdPVwibm9kZS5nZXRDbGFzcygpXCJcbiAgICAgICAgW2NsYXNzLnRyZWUtbm9kZV09XCJ0cnVlXCJcbiAgICAgICAgW2NsYXNzLnRyZWUtbm9kZS1leHBhbmRlZF09XCJub2RlLmlzRXhwYW5kZWQgJiYgbm9kZS5oYXNDaGlsZHJlblwiXG4gICAgICAgIFtjbGFzcy50cmVlLW5vZGUtY29sbGFwc2VkXT1cIm5vZGUuaXNDb2xsYXBzZWQgJiYgbm9kZS5oYXNDaGlsZHJlblwiXG4gICAgICAgIFtjbGFzcy50cmVlLW5vZGUtbGVhZl09XCJub2RlLmlzTGVhZlwiXG4gICAgICAgIFtjbGFzcy50cmVlLW5vZGUtYWN0aXZlXT1cIm5vZGUuaXNBY3RpdmVcIlxuICAgICAgICBbY2xhc3MudHJlZS1ub2RlLWZvY3VzZWRdPVwibm9kZS5pc0ZvY3VzZWRcIj5cblxuICAgICAgICA8dHJlZS1ub2RlLWRyb3Atc2xvdCAqbmdJZj1cImluZGV4ID09PSAwXCIgW2Ryb3BJbmRleF09XCJub2RlLmluZGV4XCIgW25vZGVdPVwibm9kZS5wYXJlbnRcIj48L3RyZWUtbm9kZS1kcm9wLXNsb3Q+XG5cbiAgICAgICAgICA8ZGl2IGNsYXNzPVwibm9kZS13cmFwcGVyXCIgW3N0eWxlLnBhZGRpbmctbGVmdF09XCJub2RlLmdldE5vZGVQYWRkaW5nKClcIj5cbiAgICAgICAgICAgIDx0cmVlLW5vZGUtZXhwYW5kZXIgW25vZGVdPVwibm9kZVwiPjwvdHJlZS1ub2RlLWV4cGFuZGVyPlxuICAgICAgICAgICAgPGRpdiBjbGFzcz1cIm5vZGUtY29udGVudC13cmFwcGVyXCJcbiAgICAgICAgICAgICAgKGNsaWNrKT1cIm5vZGUubW91c2VBY3Rpb24oJ2NsaWNrJywgJGV2ZW50KVwiXG4gICAgICAgICAgICAgIChkYmxjbGljayk9XCJub2RlLm1vdXNlQWN0aW9uKCdkYmxDbGljaycsICRldmVudClcIlxuICAgICAgICAgICAgICAoY29udGV4dG1lbnUpPVwibm9kZS5tb3VzZUFjdGlvbignY29udGV4dE1lbnUnLCAkZXZlbnQpXCJcbiAgICAgICAgICAgICAgKHRyZWVEcm9wKT1cIm5vZGUub25Ecm9wKCRldmVudClcIlxuICAgICAgICAgICAgICBbdHJlZUFsbG93RHJvcF09XCJub2RlLmFsbG93RHJvcFwiXG4gICAgICAgICAgICAgIFt0cmVlRHJhZ109XCJub2RlXCJcbiAgICAgICAgICAgICAgW3RyZWVEcmFnRW5hYmxlZF09XCJub2RlLmFsbG93RHJhZygpXCI+XG5cbiAgICAgICAgICAgICAgPHRyZWUtbm9kZS1jb250ZW50IFtub2RlXT1cIm5vZGVcIiBbaW5kZXhdPVwiaW5kZXhcIiBbdGVtcGxhdGVdPVwidGVtcGxhdGVzLnRyZWVOb2RlVGVtcGxhdGVcIj5cbiAgICAgICAgICAgICAgPC90cmVlLW5vZGUtY29udGVudD5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDwvZGl2PlxuXG4gICAgICAgIDx0cmVlLW5vZGUtY2hpbGRyZW4gW25vZGVdPVwibm9kZVwiIFt0ZW1wbGF0ZXNdPVwidGVtcGxhdGVzXCI+PC90cmVlLW5vZGUtY2hpbGRyZW4+XG4gICAgICAgIDx0cmVlLW5vZGUtZHJvcC1zbG90IFtkcm9wSW5kZXhdPVwibm9kZS5pbmRleCArIDFcIiBbbm9kZV09XCJub2RlLnBhcmVudFwiPjwvdHJlZS1ub2RlLWRyb3Atc2xvdD5cbiAgICAgIDwvZGl2PlxuICAgICAgPHRlbXBsYXRlXG4gICAgICAgIFtuZ1RlbXBsYXRlT3V0bGV0XT1cInRlbXBsYXRlcy50cmVlTm9kZUZ1bGxUZW1wbGF0ZVwiXG4gICAgICAgIFtuZ091dGxldENvbnRleHRdPVwieyAkaW1wbGljaXQ6IG5vZGUsIG5vZGU6IG5vZGUsIGluZGV4OiBpbmRleCwgdGVtcGxhdGVzOiB0ZW1wbGF0ZXMgfVwiPlxuICAgICAgPC90ZW1wbGF0ZT5cbiAgICA8L25nLWNvbnRhaW5lcj5gXG59KVxuXG5leHBvcnQgY2xhc3MgVHJlZU5vZGVDb21wb25lbnQge1xuICBASW5wdXQoKSBub2RlOiBUcmVlTm9kZTtcbiAgQElucHV0KCkgaW5kZXg6IG51bWJlcjtcbiAgQElucHV0KCkgdGVtcGxhdGVzOiBhbnk7XG5cbiAgY29uc3RydWN0b3IocHJpdmF0ZSBlbGVtZW50UmVmOiBFbGVtZW50UmVmKSB7XG4gICAgZGVwcmVjYXRlZFNlbGVjdG9yKCdUcmVlTm9kZScsICd0cmVlLW5vZGUnLCBlbGVtZW50UmVmKTtcbiAgfVxuXG59XG5cbmludGVyZmFjZSBEZWNvcmF0b3JJbnZvY2F0aW9uIHtcbiAgdHlwZTogRnVuY3Rpb247XG4gIGFyZ3M/OiBhbnlbXTtcbn1cbiJdfQ==
